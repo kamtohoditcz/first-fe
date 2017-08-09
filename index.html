@@ -29,6 +29,7 @@
     <script src="/js/tether.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.auto-complete.js"></script>
+    <script src="/js/marked.min.js"></script>
 
 <style>
 .image {
@@ -116,7 +117,7 @@ $(function() {
           '    <img class="image" src="' + item.data('img') + '"/>' +
           '    <div class="card-block text-center" style="padding: 1.25rem 0;">' +
           '      <h2 class="card-title">' + item.data('name') + '</h2>' +
-          '      <p class="card-text">' + item.data('desc') + '</p>' +
+          '      <p class="card-text">' + marked(item.data('desc')) + '</p>' +
           '    </div>' +
           '  </div>' +
           '</div>');
