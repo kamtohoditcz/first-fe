@@ -1,8 +1,12 @@
 $(function() {
+  var $logo = $('.js-logo');
   var $value = $('.js-ideas-value');
   var $result = $('.js-ideas-result');
 
   var apiUrl = 'http://api.kamtohodit.cz';
+
+  $value.focus(function() {
+  });
 
   var ideasXhr;
   $value.autoComplete({
@@ -11,7 +15,15 @@ $(function() {
       source: function(term, response){
         console.log({term});
         try { ideasXhr.abort(); } catch(e){}
-        ideasXhr = $.getJSON(apiUrl, { q: term }, function(data){ response(data); });
+        ideasXhr = $.getJSON(apiUrl, { q: term }, function(data){
+          if ($logo.is(':visible')) {
+            $logo.animate({ height: 0, opacity: 0 }, 'fast', function() {
+              response(data);
+            });
+          } else {
+            response(data);
+          }
+        });
       },
       renderItem: function(item, search) {
         console.log({item, search});
@@ -22,8 +34,8 @@ $(function() {
       },
       onSelect: function(event, term, item) {
         event.preventDefault();
-        console.log('selected item', item);
-        $result.empty().append(
+        console.log('desc: ' + item.data('desc'));
+        var $card = $( 
           '<div class="card">' +
           '  <div class="kth-card">' +
           '    <img class="image" src="' + item.data('img') + '"/>' +
@@ -32,7 +44,11 @@ $(function() {
           '      <p class="card-text">' + marked(item.data('desc')) + '</p>' +
           '    </div>' +
           '  </div>' +
-          '</div>');
+          '</div>').hide();
+        $result.empty().append($card);
+        //$logo.animate({ height: 0, opacity: 0 }, 'slow', function() {
+        $card.fadeIn('slow');
+        //});
       },
   });
 });
