@@ -1,0 +1,10 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: url("/img/cardboard.jpg");
+  background-size: contain; }
+
+a {
+  color: #161; }
+
+/*# sourceMappingURL=style.css.map */
