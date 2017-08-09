@@ -9,6 +9,15 @@ a {
   color: #161;
 }
 
+.search { position: relative; }
+.search input { text-indent: 22px;}
+.search .fa-search {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  font-size: 15px;
+}
+
 .image {
   background-position: center;
   background-repeat: no-repeat;
