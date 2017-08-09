@@ -2,6 +2,8 @@
 <html lang="cs">
   <head>
     <meta charset="utf-8">
+    <title>Kam to hodit?</title>
+
     <link rel="apple-touch-icon" sizes="57x57" href="/fav/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/fav/apple-icon-60x60.png">
     <link rel="apple-touch-icon" sizes="72x72" href="/fav/apple-icon-72x72.png">
@@ -30,101 +32,16 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.auto-complete.js"></script>
     <script src="/js/marked.min.js"></script>
-
-<style>
-.image {
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: 100% auto;
-  width: 100%;
-  height: auto;
-  position: relative;
-}
-.card {
-  padding: 0;
-  border: 0;
-  border-radius: 0;
-  background-color: transparent;
-}
-.kth-card {
-  height: 100%;
-  margin: 8px;
-  padding: 8px;
-  border: 0;
-  border-radius: 0;
-  background-color: #fafafa;
-}
-</style>
-
-
+    <script src="/js/script.js"></script>
   </head>
   <body>
-
-    <div class="container">
-      <section class="container text-center">
-        <form class="js-ideas form-inline text-center">
-          <div class="row" style="width: 85%;">
-            <input class="js-ideas-value form-control col-10" type="text"/>
-            <!-- <button class="btn col-2" type="submit">Vytvořit</button> -->
-          </div>
-        </form>
-        <div class="js-ideas-result row">
-          <div class="card col-xs-12 col-md-6 col-lg-4">
-            <div class="kth-card">
-              <img class="image" src="http://localhost:3000/uploads/trash/500x500-ac121ee6-b309-4d69-a740-ee4a2168dffd.png"/>
-              <div class="card-block text-center" style="padding: 1.25rem 0;">
-                <h2 class="card-title">oblečení</h2>
-                <p class="card-text"> the text </p>
-              </div>
-            </div>
-          </div>
-        </div><!-- .js-ideas-result -->
-      </section>
-    </div>
-
-<script>
-$(function() {
-  //var $ideas = $('.js-ideas');
-  var $value = $('.js-ideas-value');
-  var $result = $('.js-ideas-result');
-  //var T_30SEC = 30000;
-  //var T_3SEC = 3000;
-
-  var apiUrl = 'http://localhost:3000/';
-
-  var ideasXhr;
-  $value.autoComplete({
-      minChars: 0,
-      delay: 300,
-      source: function(term, response){
-        console.log({term});
-        try { ideasXhr.abort(); } catch(e){}
-        ideasXhr = $.getJSON('http://localhost:3000/', { q: term }, function(data){ response(data); });
-      },
-      renderItem: function(item, search) {
-        console.log({item, search});
-        var name = item.name;
-        search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
-        var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-        return '<div class="autocomplete-suggestion" data-name="' + item.name + '" data-img="' + apiUrl + item.imagePath + '" data-desc="' + item.description+ '">' + name.replace(re, "<b>$1</b>") + '</div>';
-      },
-      onSelect: function(event, term, item) {
-        event.preventDefault();
-        console.log('selected item', item);
-        $result.empty().append(
-          '<div class="card col-xs-12 col-md-6 col-lg-4">' +
-          '  <div class="kth-card">' +
-          '    <img class="image" src="' + item.data('img') + '"/>' +
-          '    <div class="card-block text-center" style="padding: 1.25rem 0;">' +
-          '      <h2 class="card-title">' + item.data('name') + '</h2>' +
-          '      <p class="card-text">' + marked(item.data('desc')) + '</p>' +
-          '    </div>' +
-          '  </div>' +
-          '</div>');
-      },
-  });
-});
-</script>
-
+    <section class="container">
+      <form class="js-ideas form-inline text-center row" style="margin: auto;">
+        <input class="js-ideas-value form-control col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3" style="border-radius: 0;" type="text"/>
+      </form>
+      <div class="row" style="width: 100%; margin: auto;">
+        <div class="js-ideas-result col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-6 offset-lg-3" style="padding: 10px 0px;"></div>
+      </div>
+    </section>
   </body>
 </html>
