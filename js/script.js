@@ -2,7 +2,7 @@ $(function() {
   var $value = $('.js-ideas-value');
   var $result = $('.js-ideas-result');
 
-  var apiUrl = 'http://localhost:3000/';
+  var apiUrl = 'http://api.kamtohodit.cz';
 
   var ideasXhr;
   $value.autoComplete({
