@@ -59,6 +59,9 @@
             }
             $(window).on('resize.autocomplete', that.updateSC);
 
+            // Show suggestions on click
+            that.on('click', function(){ that.updateSC(0); });
+
             that.sc.appendTo('body');
 
             that.sc.on('mouseleave', '.autocomplete-suggestion', function (){

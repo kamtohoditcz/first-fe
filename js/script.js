@@ -5,19 +5,15 @@ $(function() {
 
   var apiUrl = 'http://api.kamtohodit.cz';
 
-  $value.focus(function() {
-  });
-
   var ideasXhr;
   $value.autoComplete({
       minChars: 0,
       delay: 300,
       source: function(term, response){
-        console.log({term});
         try { ideasXhr.abort(); } catch(e){}
         ideasXhr = $.getJSON(apiUrl, { q: term }, function(data){
           if ($logo.is(':visible')) {
-            $logo.animate({ height: 0, opacity: 0 }, 'fast', function() {
+            $logo.animate({ width: 0, height: 0, opacity: 0 }, 'fast', function() {
               response(data);
             });
           } else {
@@ -26,15 +22,12 @@ $(function() {
         });
       },
       renderItem: function(item, search) {
-        console.log({item, search});
-        var name = item.name;
         search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-        return '<div class="autocomplete-suggestion" data-name="' + item.name + '" data-img="' + apiUrl + item.imagePath + '" data-desc="' + item.description+ '">' + name.replace(re, "<b>$1</b>") + '</div>';
+        return '<div class="autocomplete-suggestion" data-name="' + item.name + '" data-img="' + apiUrl + item.imagePath + '" data-desc="' + item.description+ '">' + item.name.replace(re, "<b>$1</b>") + '</div>';
       },
       onSelect: function(event, term, item) {
         event.preventDefault();
-        console.log('desc: ' + item.data('desc'));
         var $card = $( 
           '<div class="card">' +
           '  <div class="kth-card">' +
@@ -46,9 +39,7 @@ $(function() {
           '  </div>' +
           '</div>').hide();
         $result.empty().append($card);
-        //$logo.animate({ height: 0, opacity: 0 }, 'slow', function() {
         $card.fadeIn('slow');
-        //});
       },
   });
 });
