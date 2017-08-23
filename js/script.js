@@ -45,7 +45,7 @@ $(function() {
 
   // Fill stats, eg:
   // Pracujeme na <b class="js-stats-draft"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></b> odpadcích.
-  ['all', 'draft', 'pub', 'pic'].forEach(function(statsType) {
+  ['all', 'draft', 'pub', 'pic', 'lastweek'].forEach(function(statsType) {
     var $elems = $('.js-stats-' + statsType);
     if ($elems.length) {
       $.getJSON(apiUrl + '/stats', { q: statsType }, function(num) {
