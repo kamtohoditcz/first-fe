@@ -58,9 +58,13 @@ a {
 }
 .stats ul li {
   margin: 5px 0;
+  text-align: right;
 }
 .fb-icon {
   font-size: 200%;
   color: #4267b2;
 }
-
+.stats-icon {
+  width: 1em;
+  text-align: left;
+}
