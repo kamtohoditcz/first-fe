@@ -42,3 +42,25 @@ a {
   border-radius: 0;
   background-color: #fafafa;
 }
+
+.stats {
+  position: fixed;
+  background: white;
+  left: 0;
+  top: 10%;
+  background: white;
+}
+.stats ul {
+  list-style: none;
+  font-size: 180%;
+  padding: 5px;
+  margin: 5px 5px 0 5px;
+}
+.stats ul li {
+  margin: 5px 0;
+}
+.fb-icon {
+  font-size: 200%;
+  color: #4267b2;
+}
+
