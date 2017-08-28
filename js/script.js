@@ -2,6 +2,7 @@ $(function() {
   var $logo = $('.js-logo');
   var $value = $('.js-ideas-value');
   var $result = $('.js-ideas-result');
+  var $searchIcon = $('.js-search-icon');
 
   var apiUrl = 'http://api.kamtohodit.cz';
 
@@ -10,8 +11,10 @@ $(function() {
       minChars: 0,
       delay: 300,
       source: function(term, response){
+        $searchIcon.removeClass('fa-search').addClass('fa-pulse fa-spinner');
         try { ideasXhr.abort(); } catch(e){}
         ideasXhr = $.getJSON(apiUrl, { q: term }, function(data){
+          $searchIcon.addClass('fa-search').removeClass('fa-pulse fa-spinner');
           if ($logo.is(':visible')) {
             $logo.animate({ width: 0, height: 0, opacity: 0 }, 'fast', function() {
               response(data);

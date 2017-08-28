@@ -11,7 +11,7 @@ a {
 
 .search { position: relative; }
 .search input { text-indent: 22px;}
-.search .fa-search {
+.search .js-search-icon {
   position: absolute;
   top: 12px;
   left: 12px;
