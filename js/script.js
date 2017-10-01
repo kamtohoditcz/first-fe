@@ -27,7 +27,8 @@ $(function() {
       renderItem: function(item, search) {
         search = search.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
         var re = new RegExp("(" + search.split(' ').join('|') + ")", "gi");
-        return '<div class="autocomplete-suggestion" data-name="' + item.name + '" data-img="' + apiUrl + item.imagePath + '" data-desc="' + item.description+ '">' + item.name.replace(re, "<b>$1</b>") + '</div>';
+        var imagePath = item.imagePath ? apiUrl + item.imagePath : '/img/bezobrazku.png';
+        return '<div class="autocomplete-suggestion" data-name="' + item.name + '" data-img="' + imagePath + '" data-desc="' + item.description+ '">' + item.name.replace(re, "<b>$1</b>") + '</div>';
       },
       onSelect: function(event, term, item) {
         event.preventDefault();

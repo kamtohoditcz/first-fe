@@ -1,7 +1,7 @@
 body {
   padding-top: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-  background-image: url("/img/cardboard.jpg");
+  background-image: url("/img/lepenka.jpg");
   background-size: cover;
 }
 
@@ -72,4 +72,15 @@ a {
 .stats-icon {
   width: 1.2em;
   text-align: left;
+}
+
+.bg-dark {
+  color: #fff;
+  background-color: #222;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
