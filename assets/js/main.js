@@ -15,34 +15,10 @@
 	});
 
 	$(function() {
-			var $body = $('body');
-			var $main = $('#main');
-
-      $body.addClass('loading');
-
-      var apiUrl = 'http://api.kamtohodit.cz';
-
-      $.getJSON(apiUrl, {q: ''}, function(data){
-        for (var item of data) {
-          var imagePath = item.imagePath ? apiUrl + item.imagePath : '/img/bezobrazku.png';
-          var $article = $(
-            '<article class="thumb">' +
-            '	<a href="' + imagePath + '" class="image"><img src="' + imagePath + '" alt="" /></a>' +
-            '	<h2>' + item.name + '</h2>' +
-            '	<p>' + marked(item.description) + '</p>' +
-            '</article>');
-          $main.append($article);
-        }
-
-        // Delayed init
-        initMultiverse();
-      });
-	});
-
-	function initMultiverse() {
 		var	$window = $(window),
-			$body = $('body'),
-			$wrapper = $('#wrapper');
+        $body = $('body'),
+        $main = $('#main'),
+        $wrapper = $('#wrapper');
 
 		// Hack: Enable IE workarounds.
 			if (skel.vars.IEVersion < 12)
@@ -59,6 +35,7 @@
 					$body.addClass('loading');
 
 					$window.on('load', function() {
+            console.log('loaded');
 						window.setTimeout(function() {
 							$body.removeClass('loading');
 						}, 100);
@@ -79,7 +56,29 @@
 
 					});
 
-			}
+			} else {
+        $body.removeClass('loading');
+      }
+
+    var apiUrl = 'http://api.kamtohodit.cz';
+
+    $.getJSON(apiUrl, {q: ''}, function(data){
+      for (var item of data) {
+        var imagePath = item.imagePath ? apiUrl + item.imagePath : '/img/bezobrazku.png';
+        var $article = $(
+          '<article class="thumb">' +
+          '	<a href="' + imagePath + '" class="image"><img src="' + imagePath + '" alt="" /></a>' +
+          '	<h2>' + item.name + '</h2>' +
+          '	<p>' + marked(item.description) + '</p>' +
+          '</article>');
+        $main.append($article);
+      }
+
+      // Delayed init
+      initMultiverse();
+    });
+
+	function initMultiverse() {
 
 		// Scroll back to top.
 			$window.scrollTop(0);
@@ -318,6 +317,6 @@
 							$main[0]._poptrox.windowMargin = 0;
 						});
 
-	};
-
+    }
+	});
 })(jQuery);
