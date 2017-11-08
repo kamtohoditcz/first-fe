@@ -15,7 +15,31 @@
 	});
 
 	$(function() {
+			var $body = $('body');
+			var $main = $('#main');
 
+      $body.addClass('loading');
+
+      var apiUrl = 'http://api.kamtohodit.cz';
+
+      $.getJSON(apiUrl, {q: ''}, function(data){
+        for (var item of data) {
+          var imagePath = item.imagePath ? apiUrl + item.imagePath : '/img/bezobrazku.png';
+          var $article = $(
+            '<article class="thumb">' +
+            '	<a href="' + imagePath + '" class="image"><img src="' + imagePath + '" alt="" /></a>' +
+            '	<h2>' + item.name + '</h2>' +
+            '	<p>' + marked(item.description) + '</p>' +
+            '</article>');
+          $main.append($article);
+        }
+
+        // Delayed init
+        initMultiverse();
+      });
+	});
+
+	function initMultiverse() {
 		var	$window = $(window),
 			$body = $('body'),
 			$wrapper = $('#wrapper');
@@ -215,68 +239,42 @@
 		// Main.
 			var $main = $('#main');
 
-      var apiUrl = 'http://api.kamtohodit.cz';
+			// Thumbs.
+				$main.children('.thumb').each(function() {
 
-      $.getJSON(apiUrl, {q: ''}, function(data){
-        for (var item of data) {
-          var imagePath = item.imagePath ? apiUrl + item.imagePath : '/img/bezobrazku.png';
-          var $article = $(
-            '<article class="thumb">' +
-            '	<a href="' + imagePath + '" class="image"><img src="' + imagePath + '" alt="" /></a>' +
-            '	<h2>' + item.name + '</h2>' +
-            '	<p>' + marked(item.description) + '</p>' +
-            '</article>').each(function() {
+					var	$this = $(this),
+						$image = $this.find('.image'), $image_img = $image.children('img'),
+						x;
 
-            var	$this = $(this),
-              $image = $this.find('.image'), $image_img = $image.children('img'),
-              x;
+					// No image? Bail.
+						if ($image.length == 0)
+							return;
 
-            // No image? Bail.
-              if ($image.length == 0)
-                return;
+					// Image.
+					// This sets the background of the "image" <span> to the image pointed to by its child
+					// <img> (which is then hidden). Gives us way more flexibility.
 
-            // Image.
-            // This sets the background of the "image" <span> to the image pointed to by its child
-            // <img> (which is then hidden). Gives us way more flexibility.
+						// Set background.
+							$image.css('background-image', 'url(' + $image_img.attr('src') + ')');
 
-              // Set background.
-                $image.css('background-image', 'url(' + $image_img.attr('src') + ')');
+						// Set background position.
+							if (x = $image_img.data('position'))
+								$image.css('background-position', x);
 
-              // Set background position.
-                if (x = $image_img.data('position'))
-                  $image.css('background-position', x);
+						// Hide original img.
+							$image_img.hide();
 
-              // Hide original img.
-                $image_img.hide();
+					// Hack: IE<11 doesn't support pointer-events, which means clicks to our image never
+					// land as they're blocked by the thumbnail's caption overlay gradient. This just forces
+					// the click through to the image.
+						if (skel.vars.IEVersion < 11)
+							$this
+								.css('cursor', 'pointer')
+								.on('click', function() {
+									$image.trigger('click');
+								});
 
-            // Hack: IE<11 doesn't support pointer-events, which means clicks to our image never
-            // land as they're blocked by the thumbnail's caption overlay gradient. This just forces
-            // the click through to the image.
-              if (skel.vars.IEVersion < 11)
-                $this
-                  .css('cursor', 'pointer')
-                  .on('click', function() {
-                    $image.trigger('click');
-                  });
-
-          });
-          $main.append($article);
-        }
-
-      });
-
-      // Fill stats, eg:
-      // Pracujeme na <b class="js-stats-draft"><i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i></b> odpadcích.
-      ['all', 'draft', 'pub', 'pic', 'lastweek'].forEach(function(statsType) {
-        var $elems = $('.js-stats-' + statsType);
-        if ($elems.length) {
-          $.getJSON(apiUrl + '/stats', { q: statsType }, function(num) {
-            console.log('filling: ' + statsType);
-            $elems.text(num);
-          });
-        }
-      });
-
+				});
 
 			// Poptrox.
 				$main.poptrox({
@@ -320,6 +318,6 @@
 							$main[0]._poptrox.windowMargin = 0;
 						});
 
-	});
+	};
 
 })(jQuery);
