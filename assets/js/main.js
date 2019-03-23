@@ -60,7 +60,7 @@
         $body.removeClass('loading');
       }
 
-    var apiUrl = 'http://api.kamtohodit.cz';
+    var apiUrl = '//api.kamtohodit.cz';
 
     $.getJSON(apiUrl, {q: ''}, function(data){
       for (var item of data) {
